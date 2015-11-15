@@ -72,6 +72,16 @@ class OrganizationsControllerTest  < ActionController::TestCase
     assert_response :ok
   end
 
+  test "deleting an organization deletes associated alerts" do
+    @request.headers["auth-token"] = employees(:one).auth_token
+
+    assert_difference "Alert.count", -1 do
+      delete :destroy, { id: organizations(:one).id }
+    end
+
+    assert_response :ok
+  end
+
   test "non logged in users cannot delete organization" do
 
     assert_no_difference "Organization.count" do

@@ -1,6 +1,6 @@
 class Employee < ActiveRecord::Base
   has_secure_password
-  has_many :alerts
+  has_many :alerts, dependent: :destroy
   belongs_to :organization
   has_many :beacons, through: :alerts
   # has_many :organizations, through: :alerts
